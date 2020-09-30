@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, url_for
 import boto3
 
-bucket_name = "winnie-analyzevid-ab2"
+bucket_name = "raw-vids"
 s3 = boto3.client("s3")
 dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 
@@ -9,6 +9,8 @@ dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 application = Flask(__name__)
 
 
+@application.route("/", methods=['GET', 'POST'])
+@application.route("/index", methods=['GET', 'POST'])
 @application.route("/upload", methods=['GET', 'POST'])
 def upload():
     if request.method == "POST":
@@ -17,8 +19,8 @@ def upload():
             filename = img.filename
             if img:
                 s3.put_object(
-                    Bucket = bucket_name,
-                    Body = img,
+                    Bucket=bucket_name,
+                    Body=img,
                     Key=filename
                 )
                 # saves filename in session so it can be referenced later on
