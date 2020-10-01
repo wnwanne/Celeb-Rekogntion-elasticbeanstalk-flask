@@ -62,7 +62,7 @@ if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
     # adding secret key to be able to utilize sessions
-    application.secret_key = 'some secret key'
+    application.config['SECRET_KEY'] = 'some secret key'
     application.debug = True
     application.run()
 
