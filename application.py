@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request, session, url_for
 import boto3
 
+
 bucket_name = "raw-vids"
 s3 = boto3.client("s3")
 dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
-
 
 @application.route("/", methods=['GET', 'POST'])
 @application.route("/index", methods=['GET', 'POST'])
